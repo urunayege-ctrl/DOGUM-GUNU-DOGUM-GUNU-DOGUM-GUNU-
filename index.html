@@ -3,80 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>İyi Ki Doğdun Sevgilim!</title>
+    <title>Geri Sayım Başladı!</title>
     <style>
-        /* Modern Gradient Arka Plan */
         body { 
             background: linear-gradient(135deg, #fff5f8 0%, #ffebee 100%);
             display: flex; align-items: center; justify-content: center; 
             height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; color: #d81b60;
-            transition: background 1s ease;
         }
 
-        /* Başlık Yazısı ve Zıplama Animasyonu */
-        .header { font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center; animation: bounce 2s infinite; padding: 0 10px; }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* Sayaç Ekranı */
+        #timer-section { text-align: center; }
+        .timer-digits { font-size: 48px; font-weight: bold; letter-spacing: 2px; margin-top: 20px; }
+        .timer-label { font-size: 18px; opacity: 0.8; margin-bottom: 10px; }
 
-        /* Pasta ve Mum (Jilet Gibi CSS Çizimi) */
-        #cake-section { text-align: center; cursor: pointer; padding: 20px; width: 100%; max-width: 400px; position: relative; }
-        .cake {
-            width: 130px; height: 90px; background: #f48fb1; margin: 40px auto; position: relative;
-            border-radius: 10px 10px 0 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .cake::after {
-            content: ""; position: absolute; bottom: -10px; left: 0;
-            width: 130px; height: 10px; background: #e91e63;
-            border-radius: 0 0 10px 10px;
-        }
-        .candle {
-            position: absolute; top: -35px; left: 50%;
-            width: 10px; height: 40px; background: #fff;
-            border-radius: 5px; transform: translateX(-50%);
-            border: 1px solid #ddd; z-index: 2;
-        }
-        .flame {
-            position: absolute; top: -15px; left: 50%;
-            width: 16px; height: 22px; background: orange;
-            border-radius: 50% 50% 20% 20%; transform: translateX(-50%);
-            animation: flicker 0.4s infinite alternate;
-            box-shadow: 0 0 10px rgba(255,165,0,0.7);
-        }
-        @keyframes flicker {
-            from { opacity: 0.8; transform: translateX(-50%) scale(1); }
-            to { opacity: 1; transform: translateX(-50%) scale(1.1); }
-        }
+        /* Pasta ve Mesaj Bölümleri (Başta Gizli) */
+        #cake-section, #message { display: none; text-align: center; width: 100%; max-width: 400px; }
 
-        /* Mesaj Kartı ve Açılış Animasyonu */
-        #message { 
-            display: none; padding: 30px; max-width: 350px; text-align: center;
-            background: rgba(255, 255, 255, 0.95); 
-            border-radius: 25px; box-shadow: 0 15px 40px rgba(216, 27, 96, 0.2); 
-            animation: pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 2px solid #fce4ec; z-index: 10;
-        }
-        h1 { margin-top: 0; color: #ad1457; font-size: 20px; }
-        p { line-height: 1.6; font-size: 1.1em; color: #444; margin: 8px 0; }
-        
-        @keyframes pop {
-            0% { transform: scale(0.6); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        /* Pasta Tasarımı */
+        .header { font-size: 24px; font-weight: bold; margin-bottom: 20px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .cake { width: 130px; height: 90px; background: #f48fb1; margin: 40px auto; position: relative; border-radius: 10px 10px 0 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .cake::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 130px; height: 10px; background: #e91e63; border-radius: 0 0 10px 10px; }
+        .candle { position: absolute; top: -35px; left: 50%; width: 10px; height: 40px; background: #fff; border-radius: 5px; transform: translateX(-50%); border: 1px solid #ddd; z-index: 2; }
+        .flame { position: absolute; top: -15px; left: 50%; width: 16px; height: 22px; background: orange; border-radius: 50% 50% 20% 20%; transform: translateX(-50%); animation: flicker 0.4s infinite alternate; box-shadow: 0 0 10px rgba(255,165,0,0.7); }
+        @keyframes flicker { from { opacity: 0.8; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(1.1); } }
 
-        /* Animasyonlu Kalp Tanecikleri */
+        /* Mesaj Kartı */
+        #message { padding: 30px; background: rgba(255, 255, 255, 0.95); border-radius: 25px; box-shadow: 0 15px 40px rgba(216, 27, 96, 0.2); animation: pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid #fce4ec; }
+        @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         .particle { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
+
+    <div id="timer-section">
+        <div class="timer-label">Sürprize çok az kaldı... ❤️</div>
+        <div id="countdown" class="timer-digits">00:00:00</div>
+    </div>
 
     <div id="cake-section" onclick="makeWish()">
         <div class="header">İyi Ki Doğdun Sevgilim! 🎉</div>
         <div class="cake">
             <div class="candle" id="flame-container"><div class="flame"></div></div>
         </div>
-        <p style="margin-top: 30px; font-weight: bold; color: #ad1457; opacity: 0.8;">Dileğini tut ve muma dokun!</p>
+        <p style="margin-top: 30px; font-weight: bold; color: #ad1457;">Dileğini tut ve muma dokun!</p>
     </div>
 
     <div id="message">
@@ -88,53 +58,58 @@
     </div>
 
     <script>
-        function makeWish() {
-            // Mumu söndür (Duman efekti)
-            document.getElementById('flame-container').innerHTML = "💨";
-            
-            // Konfeti ve kalp yağmuru (En Fancy Kısım)
-            createExplosion();
+        // HEDEF ZAMAN: 28 Mart 2026, Saat 00:00:00
+        const targetDate = new Date("March 28, 2026 00:00:00").getTime();
 
-            // 1 saniye sonra notu göster (Açılış animasyonu ile)
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                (hours < 10 ? "0" + hours : hours) + ":" + 
+                (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                (seconds < 10 ? "0" + seconds : seconds);
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("timer-section").style.display = "none";
+                document.getElementById("cake-section").style.display = "block";
+            }
+        }, 1000);
+
+        function makeWish() {
+            document.getElementById('flame-container').innerHTML = "💨";
+            createExplosion();
             setTimeout(() => {
                 document.getElementById('cake-section').style.display = 'none';
                 document.getElementById('message').style.display = 'block';
-                document.body.style.background = "#fff"; // Not okurken sadeleşsin
+                document.body.style.background = "#fff";
             }, 1000);
         }
 
         function createExplosion() {
-            const emojis = ['❤️', '✨', '🎈', '💖', '🍪', '💊', '🎂'];
+            const emojis = ['❤️', '✨', '🎈', '💖', '🍪', '💊'];
             for(let i=0; i<40; i++) {
                 let p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                p.style.left = "50vw";
-                p.style.top = "50vh";
+                p.style.left = "50vw"; p.style.top = "50vh";
                 p.style.fontSize = Math.random() * 20 + 20 + "px";
-                
-                // Patlama yönü ve hızı
                 let angle = Math.random() * Math.PI * 2;
                 let velocity = Math.random() * 12 + 6;
                 let vx = Math.cos(angle) * velocity;
                 let vy = Math.sin(angle) * velocity;
-                
                 document.body.appendChild(p);
-                
                 let pos = { x: 50, y: 50 };
                 let interval = setInterval(() => {
-                    pos.x += vx;
-                    pos.y += vy;
-                    vy += 0.2; // Yerçekimi efekti
-                    p.style.left = pos.x + "vw";
-                    p.style.top = pos.y + "vh";
+                    pos.x += vx; pos.y += vy; vy += 0.2;
+                    p.style.left = pos.x + "vw"; p.style.top = pos.y + "vh";
                     p.style.opacity = p.style.opacity ? p.style.opacity - 0.02 : 1;
-                    p.style.transform = `rotate(${pos.x * 5}deg)`; // Kendi etrafında dönsün
-                    
-                    if(p.style.opacity <= 0) {
-                        clearInterval(interval);
-                        p.remove();
-                    }
+                    if(p.style.opacity <= 0) { clearInterval(interval); p.remove(); }
                 }, 20);
             }
         }
