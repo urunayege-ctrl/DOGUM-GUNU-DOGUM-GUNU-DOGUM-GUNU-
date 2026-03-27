@@ -2,67 +2,27 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>İyi Ki Doğdun Sevgilim!</title>
     <style>
-        body { 
-            background: linear-gradient(135deg, #fff5f8 0%, #fce4ec 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; color: #d81b60;
-        }
-        .header { font-size: 22px; font-weight: bold; margin-bottom: 20px; text-align: center; padding: 0 20px; }
-        .cake {
-            position: relative; width: 140px; height: 90px;
-            background: #f48fb1; border-radius: 10px 10px 0 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            cursor: pointer; margin-top: 40px;
-        }
-        .cake::after {
-            content: ""; position: absolute; top: 100%; left: 0;
-            width: 140px; height: 12px; background: #e91e63;
-            border-radius: 0 0 10px 10px;
-        }
-        .candle {
-            position: absolute; top: -35px; left: 50%;
-            width: 10px; height: 40px; background: #fff;
-            border-radius: 5px; transform: translateX(-50%);
-            border: 1px solid #ddd;
-        }
-        .flame {
-            position: absolute; top: -15px; left: 50%;
-            width: 16px; height: 22px; background: #ff9800;
-            border-radius: 50% 50% 20% 20%; transform: translateX(-50%);
-            animation: flicker 0.5s infinite alternate;
-            box-shadow: 0 0 10px #ff9800;
-        }
-        @keyframes flicker {
-            from { opacity: 0.8; transform: translateX(-50%) scale(1); }
-            to { opacity: 1; transform: translateX(-50%) scale(1.1); }
-        }
-        #message { 
-            display: none; padding: 25px; max-width: 320px; text-align: center;
-            background: rgba(255, 255, 255, 0.98); 
-            border-radius: 25px; box-shadow: 0 15px 40px rgba(216, 27, 96, 0.2); 
-            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 2px solid #fce4ec;
-        }
-        h1 { margin-top: 0; color: #ad1457; font-size: 1.5em; }
-        p { line-height: 1.5; font-size: 1.05em; color: #444; margin-bottom: 10px; }
-        .heart-btn { font-size: 30px; margin-top: 10px; display: block; }
-        @keyframes pop {
-            0% { transform: scale(0.6); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        body { background: #fff5f8; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; overflow: hidden; }
+        #cake-section { text-align: center; cursor: pointer; padding: 20px; width: 100%; }
+        .cake { width: 120px; height: 80px; background: #f48fb1; margin: 40px auto; position: relative; border-radius: 10px 10px 0 0; }
+        .cake::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 120px; height: 10px; background: #e91e63; border-radius: 0 0 10px 10px; }
+        .candle { position: absolute; top: -30px; left: 55px; width: 10px; height: 35px; background: #fff; border-radius: 5px; border: 1px solid #ddd; }
+        .flame { position: absolute; top: -15px; left: -2px; width: 14px; height: 20px; background: orange; border-radius: 50% 50% 20% 20%; animation: f 0.5s infinite; }
+        @keyframes f { from { opacity: 0.8; transform: scale(1); } to { opacity: 1; transform: scale(1.1); } }
+        #message { display: none; padding: 25px; max-width: 85%; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; border: 2px solid #fce4ec; }
+        h1 { color: #ad1457; font-size: 22px; }
+        p { color: #444; line-height: 1.6; font-size: 16px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-    <div id="cake-section" onclick="makeWish()">
-        <div class="header">Neredeyse 2 yıldır hayatımdasın... ❤️</div>
-        <div class="cake">
-            <div class="candle" id="flame-container"><div class="flame"></div></div>
-        </div>
-        <p style="margin-top: 30px; font-weight: bold; opacity: 0.8;">Dileğini tut ve muma dokun!</p>
+    <div id="cake-section" onclick="showMsg()">
+        <h2 style="color: #d81b60; font-size: 18px;">2 yıldır hayatımdasın... ❤️</h2>
+        <div class="cake"><div class="candle"><div id="f" class="flame"></div></div></div>
+        <p style="color: #ad1457; font-weight: bold;">Dileğini tut ve muma dokun!</p>
     </div>
 
     <div id="message">
@@ -70,41 +30,16 @@
         <p>Neredeyse 2 yıldır hayatımdasın ama sanki 22 yıl gibi...</p>
         <p>İlk yaptığın taş gibi kurabiyeler, "çarpıyım mı" şakaları, seni kaçırıyorum, "ilaçlarını aldın mı" zorbalıkları ve daha bir sürü güzel şeyin başlangıcı olan o diğer şeyler.</p>
         <p>Beni tamamladığın için teşekkür ederim sevgilim. Sana senin kadar özel bir hediye. İyi ki varsın, iyi ki hayatımdasın. Seni çok seviyorum.</p>
-        <span class="heart-btn">🎁❤️✨</span>
     </div>
 
     <script>
-        function makeWish() {
-            document.getElementById('flame-container').innerHTML = "💨";
-            createExplosion();
-            setTimeout(() => {
+        function showMsg() {
+            document.getElementById('f').style.display = 'none';
+            setTimeout(function() {
                 document.getElementById('cake-section').style.display = 'none';
                 document.getElementById('message').style.display = 'block';
-                document.body.style.background = "#fff5f8";
-            }, 800);
-        }
-
-        function createExplosion() {
-            const symbols = ['❤️', '✨', '💖', '🍪', '💊', '🎂'];
-            for(let i=0; i<35; i++) {
-                let p = document.createElement('div');
-                p.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-                p.style.position = "fixed";
-                p.style.left = "50vw";
-                p.style.top = "50vh";
-                p.style.fontSize = Math.random() * 20 + 20 + "px";
-                p.style.transition = "all 1.5s ease-out";
-                p.style.zIndex = "1000";
-                document.body.appendChild(p);
-                
-                setTimeout(() => {
-                    p.style.left = (Math.random() * 140 - 70) + 50 + "vw";
-                    p.style.top = (Math.random() * 140 - 70) + 50 + "vh";
-                    p.style.opacity = "0";
-                    p.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
-                }, 20);
-                setTimeout(() => { p.remove(); }, 1500);
-            }
+                document.body.style.background = "#fce4ec";
+            }, 500);
         }
     </script>
 </body>
